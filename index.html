@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StreamEduXR | Gestión de Proyecto</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="brand">
+                <i class="fa-solid fa-vr-cardboard"></i> StreamEdu<span>XR</span>
+            </div>
+            <ul class="nav-links">
+                <li><a href="#modulo-1" class="active"><i class="fa-solid fa-gavel"></i> Módulo I: Levantamiento & Reglas</a></li>
+                <li><a href="#modulo-2"><i class="fa-solid fa-diagram-project"></i> Módulo II: Modelado de Datos</a></li>
+                <li><a href="#modulo-3"><i class="fa-solid fa-code"></i> Módulo III: Implementación SQL</a></li>
+                <li><a href="#modulo-4"><i class="fa-solid fa-magnifying-glass-chart"></i> Módulo IV: Análisis Avanzado</a></li>
+                <li><a href="#modulo-5"><i class="fa-solid fa-chart-line"></i> Módulo V: Business Intelligence</a></li>
+                <li><a href="#modulo-6"><i class="fa-solid fa-file-contract"></i> Módulo VI: Cierre & Informe</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <div class="header-title">
+                    <h1>Arquitectura StreamEduXR</h1>
+                    <p class="subtitle">Flujo de Trabajo Full-Stack</p>
+                </div>
+                <div class="header-actions">
+                    <span class="status-badge sql">Filtro: MySQL 8.0</span>
+                </div>
+            </header>
+
+<section id="modulo-1" class="phase-section done-module">
+        <div class="phase-header">
+            <div>
+                <h2>Módulo I: Fase A - Levantamiento y Reglas de Negocio</h2>
+                <p class="text-small" style="color: var(--color-teal);">Cimiento lógico y restricciones de integridad del ecosistema StreamEduXR</p>
+            </div>
+        </div>
+
+        <div class="content-placeholder">
+            <h3 class="section-title">1.1. Definición de Reglas de Negocio (Business Rules)</h3>
+            <p class="text-muted">Restricciones técnicas para garantizar la integridad referencial del OLTP.</p>
+            
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th style="width: 70px;">ID</th>
+                        <th>Regla de Negocio</th>
+                        <th>Impacto Técnico (Implementación)</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="highlight-text no-wrap">RN-01</td>
+                        <td><b>Exclusividad Institucional:</b> Usuario vinculado a una institución.</td>
+                        <td class="technical-text"><code class="code-font">FK_id_institucion NOT NULL</code></td>
+                    </tr>
+                    <tr class="row-alt">
+                        <td class="highlight-text no-wrap">RN-02</td>
+                        <td><b>Desacoplamiento:</b> Contenido lógico separado de archivos físicos.</td>
+                        <td class="technical-text">Relación <code class="code-font">1:N</code> (Master-Detail)</td>
+                    </tr>
+                    <tr>
+                        <td class="highlight-text no-wrap">RN-03</td>
+                        <td><b>Unicidad Feedback:</b> Una calificación por usuario/contenido.</td>
+                        <td class="technical-text"><code class="code-font">UNIQUE(u_id, c_id)</code></td>
+                    </tr>
+                    <tr class="row-alt">
+                        <td class="highlight-text no-wrap">RN-04</td>
+                        <td><b>Consumo:</b> Progreso validado entre 0 y 100%.</td>
+                        <td class="technical-text"><code class="code-font">CHECK(prog_pct 0-100)</code></td>
+                    </tr>
+                    <tr>
+                        <td class="highlight-text no-wrap">RN-05</td>
+                        <td><b>Acceso:</b> Validación por suscripción o compra individual.</td>
+                        <td class="technical-text">Lógica de acceso transaccional</td>
+                    </tr>
+                    <tr class="row-alt">
+                        <td class="highlight-text no-wrap">RN-06</td>
+                        <td><b>Cursos:</b> Segmentación Institucional vs Global.</td>
+                        <td class="technical-text"><code class="code-font">id_inst NULLABLE</code></td>
+                    </tr>
+                    <tr>
+                        <td class="highlight-text no-wrap">RN-07</td>
+                        <td><b>Pagos:</b> Compra requiere registro de pago inicial.</td>
+                        <td class="technical-text"><code class="code-font">Atomicidad via SP</code></td>
+                    </tr>
+                    <tr class="row-alt">
+                        <td class="highlight-text no-wrap">RN-08</td>
+                        <td><b>Tags:</b> Indexación obligatoria para publicación.</td>
+                        <td class="technical-text"><code class="code-font">Trigger Before Insert</code></td>
+                    </tr>
+                    <tr>
+                        <td class="highlight-text no-wrap">RN-09</td>
+                        <td><b>Formatos:</b> Validación de extensiones según tipo.</td>
+                        <td class="technical-text">Check MIME types</td>
+                    </tr>
+                    <tr class="row-alt">
+                        <td class="highlight-text no-wrap">RN-10</td>
+                        <td><b>Auditoría:</b> Trazabilidad de cambios en toda la DB.</td>
+                        <td class="technical-text"><code class="code-font">Audit Fields (Default)</code></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="section-title">1.2. Diccionario de Datos Multimedia & XR</h3>
+            <div class="grid-auto-fit">
+                <div class="audit-item">
+                    <strong>Formatos Video/Audio</strong>
+                    <span>MP4, WebM, MP3, AAC</span>
+                </div>
+                <div class="audit-item">
+                    <strong>Modelos XR (RA/RV)</strong>
+                    <span>.GLB, .GLTF, .USDZ</span>
+                </div>
+                <div class="audit-item">
+                    <strong>Documentos</strong>
+                    <span>PDF, EPUB, JSON</span>
+                </div>
+            </div>
+
+            <h3 class="section-title">1.3. Matriz de Trazabilidad</h3>
+            <div class="card-box">
+                <ul class="check-list">
+                    <li>✅ <b>Institucional:</b> <code class="code-font">institucion</code>, <code class="code-font">usuario</code> | ✅ <b>Catálogo:</b> <code class="code-font">contenido</code>, <code class="code-font">archivo</code></li>
+                    <li>✅ <b>Finanzas:</b> <code class="code-font">plan</code>, <code class="code-font">pago</code> | ✅ <b>BI:</b> <code class="code-font">consumo</code>, <code class="code-font">resena</code></li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+<section id="modulo-2" class="phase-section done-module">
+    <div class="phase-header">
+        <div>
+            <h2>Módulo II: Fases B, C y D - Modelado de Datos</h2>
+            <p class="text-small" style="color: var(--color-teal);">Arquitectura relacional de alta disponibilidad para entornos XR</p>
+        </div>
+    </div>
+
+    <div class="content-placeholder">
+        <h3 class="section-title">2.1. Modelo Conceptual (MCD)</h3>
+        <p class="text-muted">Identificación de entidades maestras (Fuertes) y dependientes (Débiles) con sus respectivas reglas de cardinalidad.</p>
+        
+        <div class="diagram-container">
+            <img src="assets/media/streameduxr_mcd_v2.png" alt="Modelo Conceptual de Datos StreamEduXR">
+            <p>📷 <em>MCD: Representación lógica del ecosistema educativo y financiero</em></p>
+        </div>
+
+        <div class="grid-2-col">
+            <div class="card-box">
+                <h4 class="card-title">2.2. Modelo Lógico (MLD)</h4>
+                <p class="text-small">Estructura normalizada en <b>3FN</b> para garantizar la integridad:</p>
+                <ul class="check-list" style="margin-bottom: 1rem;">
+                    <li>✅ <b>Normalización 3FN:</b> Eliminación de dependencias transitivas (ej. los datos de la institución no se repiten en el usuario, se referencian).</li>
+                    <li>✅ <b>Resolución N:M:</b> Implementación de tablas puente <code class="code-font">curso_contenido</code> y <code class="code-font">contenido_tag</code> para permitir relaciones muchos a muchos.</li>
+                    <li>✅ <b>Keys:</b> Definición estricta de PKs autoincrementales y FKs vinculantes con integridad referencial.</li>
+                </ul>
+                <div class="diagram-container" style="padding: 1rem;">
+                    <img src="assets/media/streameduxr_mld.png" alt="Modelo Lógico StreamEduXR" style="max-height: 200px;">
+                    <p class="text-small">📷 <em>MLD: Resolución de llaves y normalización</em></p>
+                </div>
+            </div>
+
+            <div class="card-box">
+                <h4 class="card-title">2.3. Modelo Físico (PDM)</h4>
+                <p class="text-small">Optimización específica para motor <b>InnoDB</b> en MySQL 8.0+:</p>
+                <table class="data-table" style="font-size: 0.8rem; margin-bottom: 1rem;">
+                    <thead>
+                        <tr>
+                            <th>Implementación</th>
+                            <th>Tipo de Dato / Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Metadatos XR</td>
+                            <td class="code-font">JSON (Metadata Dinámica)</td>
+                        </tr>
+                        <tr>
+                            <td>Montos B2B/B2C</td>
+                            <td class="code-font">DECIMAL(10,2) (Precisión)</td>
+                        </tr>
+                        <tr>
+                            <td>Fechas Auditoría</td>
+                            <td class="code-font">DATETIME (Default Current)</td>
+                        </tr>
+                        <tr>
+                            <td>Integridad</td>
+                            <td class="code-font">ON DELETE RESTRICT / CASCADE</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p class="text-small"><b>Constraints:</b> Implementación de <code class="code-font">ENUM</code> para estados de contenido y <code class="code-font">CHECK</code> para rangos de calificación (1-5).</p>
+            </div>
+        </div>
+
+        <h3 class="section-title">Estrategia de Indexación Justificada (Performance & Search)</h3>
+        <p class="text-muted">Se han definido los siguientes 6 índices para garantizar tiempos de respuesta óptimos en consultas frecuentes:</p>
+        
+        <table class="data-table" style="margin-bottom: 2rem;">
+            <thead>
+                <tr>
+                    <th>Índice</th>
+                    <th>Tabla(Columna)</th>
+                    <th>Justificación de Negocio / BI</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="code-font">idx_user_auth</td>
+                    <td>usuario(email)</td>
+                    <td>Acelera el proceso de autenticación y garantiza unicidad de cuentas.</td>
+                </tr>
+                <tr>
+                    <td class="code-font">idx_cont_search</td>
+                    <td>contenido(titulo)</td>
+                    <td>Optimiza el filtrado y búsqueda en el catálogo multimedia para el usuario.</td>
+                </tr>
+                <tr>
+                    <td class="code-font">idx_cons_trend</td>
+                    <td>consumo(fecha_hora)</td>
+                    <td>Crítico para reportes de BI: análisis de tendencias temporales y horas pico.</td>
+                </tr>
+                <tr>
+                    <td class="code-font">idx_pay_ref</td>
+                    <td>pago(referencia)</td>
+                    <td>Búsqueda instantánea para soporte técnico y conciliaciones bancarias.</td>
+                </tr>
+                <tr>
+                    <td class="code-font">idx_comp_status</td>
+                    <td>compra(estado_pago)</td>
+                    <td>Acelera reportes de ingresos mensuales y tasa de conversión financiera.</td>
+                </tr>
+                <tr>
+                    <td class="code-font">ftx_tag_name</td>
+                    <td>tag(nombre_tag)</td>
+                    <td><b>Full-Text Search:</b> Búsqueda semántica para el motor de recomendación.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="grid-auto-fit">
+            <div class="index-card border-teal">
+                <div class="index-title">B-Tree Indexes</div>
+                <div class="index-desc">Estructura equilibrada para búsquedas exactas y rangos.</div>
+            </div>
+            <div class="index-card border-orange">
+                <div class="index-title">Full-Text Search</div>
+                <div class="index-desc">Algoritmo de relevancia para etiquetas y descubrimiento.</div>
+            </div>
+            <div class="index-card border-teal">
+                <div class="index-title">Unique Constraints</div>
+                <div class="index-desc">Integridad transaccional en referencias y calificaciones.</div>
+            </div>
+        </div>
+    </div>
+    </section>
+
+<section id="modulo-3" class="phase-section done-module">
+    <div class="phase-header">
+        <div>
+            <h2>Módulo III: Implementación y Capa de Persistencia</h2>
+            <p class="text-small" style="color: var(--color-teal);">Codificación pura siguiendo el estándar de desarrollo profesional</p>
+        </div>
+    </div>
+
+    <div class="content-placeholder">
+        
+        <div class="grid-2-col" style="margin-bottom: 3rem; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div class="file-download-box" style="border-radius: 0 !important;">
+                <div class="file-info">
+                    <div class="file-icon-wrapper"><i class="fa-solid fa-file-code file-icon"></i></div>
+                    <div class="file-text">
+                        <strong class="file-name">01_ddl_streameduxr.sql</strong>
+                        <span class="file-desc">3.1. Definición de Esquema</span>
+                    </div>
+                </div>
+                <a href="sql/01_ddl_streameduxr.sql" download class="download-btn-pro">
+                    <i class="fa-solid fa-download"></i> <span>DDL</span>
+                </a>
+            </div>
+
+            <div class="file-download-box" style="border-radius: 0 !important;">
+                <div class="file-info">
+                    <div class="file-icon-wrapper"><i class="fa-solid fa-database file-icon"></i></div>
+                    <div class="file-text">
+                        <strong class="file-name">02_dml_seed.sql</strong>
+                        <span class="file-desc">3.2. Poblamiento (700+ Reg)</span>
+                    </div>
+                </div>
+                <a href="sql/02_dml_seed.sql" download class="download-btn-pro">
+                    <i class="fa-solid fa-download"></i> <span>DML</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="technical-summary">
+            
+            <div class="summary-section" style="margin-bottom: 25px;">
+                <h3 class="section-title"><span class="highlight-num">3.1.</span> Diseño de Estructura (DDL)</h3>
+                <ul class="audit-list">
+                    <li class="audit-item"><strong>Motor:</strong> <code class="code-font">InnoDB</code> transaccional y <code class="code-font">utf8mb4</code>.</li>
+                    <li class="audit-item"><strong>Integridad:</strong> <code class="code-font">CONSTRAINTS</code> de validación y unicidad.</li>
+                </ul>
+            </div>
+
+            <div class="summary-section" style="margin-bottom: 25px;">
+                <h3 class="section-title"><span class="highlight-num">3.2.</span> Estrategia de Poblamiento (DML)</h3>
+                <ul class="audit-list">
+                    <li class="audit-item"><strong>Sintaxis:</strong> 700+ registros coherentes con Lore multimedia.</li>
+                    <li class="audit-item"><strong>BI Ready:</strong> Integridad cronológica en consumos y pagos.</li>
+                </ul>
+            </div>
+
+            <div class="summary-section">
+                <h3 class="section-title"><span class="highlight-num">3.3.</span> Programabilidad del Lado del Servidor</h3>
+                
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-top: 15px;">
+                    
+                    <div class="card-box border-teal" style="padding: 1rem; border-radius: 0 !important;">
+                        <h4 class="card-title" style="font-size: 0.85rem; margin-bottom: 5px;">Stored Procedures</h4>
+                        <p class="text-small" style="font-size: 0.7rem; color: var(--color-teal); font-weight: bold; margin-bottom: 5px;"><code class="code-font">sp_registrar_compra</code></p>
+                        <p class="text-muted" style="font-size: 0.7rem; line-height: 1.3;">Transacciones atómicas para asegurar la integridad del flujo financiero.</p>
+                    </div>
+
+                    <div class="card-box border-orange" style="padding: 1rem; border-radius: 0 !important;">
+                        <h4 class="card-title" style="font-size: 0.85rem; margin-bottom: 5px;">Triggers</h4>
+                        <p class="text-small" style="font-size: 0.7rem; color: var(--color-orange); font-weight: bold; margin-bottom: 5px;"><code class="code-font">trg_actualizar_rating</code></p>
+                        <p class="text-muted" style="font-size: 0.7rem; line-height: 1.3;">Automatización del cálculo de reputación tras cada nueva reseña.</p>
+                    </div>
+
+                    <div class="card-box" style="border-left: 4px solid var(--color-navy); padding: 1rem; background: #f9fafb; border-radius: 0 !important;">
+                        <h4 class="card-title" style="font-size: 0.85rem; margin-bottom: 5px;">Vistas Analíticas</h4>
+                        <p class="text-small" style="font-size: 0.7rem; color: var(--color-navy); font-weight: bold; margin-bottom: 5px;"><code class="code-font">vw_consumo / vw_ingresos</code></p>
+                        <p class="text-muted" style="font-size: 0.7rem; line-height: 1.3;">Abstracción de datos optimizada para el modelado en Power BI.</p>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+    </section>
+
+<section id="modulo-4" class="phase-section active-module">
+    <div class="phase-header">
+        <div>
+            <h2>Módulo IV: Análisis Avanzado (Querying)</h2>
+            <p class="text-small" style="color: var(--color-teal);">Extracción de inteligencia operativa, métricas de negocio y gestión administrativa</p>
+        </div>
+    </div>
+
+    <div class="content-placeholder">
+        
+        <div style="margin-bottom: 3rem; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+            <a href="admin/index.php" target="_blank" class="db-action-btn" style="padding: 1.2rem 2.5rem; background: var(--color-navy);">
+                <i class="fa-solid fa-terminal"></i>
+                <span>Abrir StreamEduXR Admin</span>
+            </a>
+            <p class="text-muted" style="font-size: 0.75rem;">Panel con gestión completa, Consola SQL y Exportación a Excel</p>
+        </div>
+
+        <div class="grid-auto-fit" style="margin-bottom: 2.5rem;">
+            
+            <div class="card-box">
+                <h4 class="card-title">4.1. Inteligencia Operativa</h4>
+                <p class="text-muted" style="font-size: 0.85rem; line-height: 1.6;">
+                    <strong>Consultas de Engagement:</strong> Implementación de métricas de TOP contenido por tiempo reproducido, tasas de finalización por formato (XR/Video) y auditoría de recursos inactivos.
+                </p>
+            </div>
+
+            <div class="card-box">
+                <h4 class="card-title" style="border-bottom-color: #ef6c00;">4.2. Salud Financiera</h4>
+                <p class="text-muted" style="font-size: 0.85rem; line-height: 1.6;">
+                    <strong>Métricas de Suscripción:</strong> Cálculo automatizado de <strong>ARPU</strong> institucional, monitoreo de <strong>Churn Rate</strong> y eficiencia de recaudación por pasarelas de pago.
+                </p>
+            </div>
+
+            <div class="card-box">
+                <h4 class="card-title" style="border-bottom-color: var(--color-teal);">4.3. Análisis Estratégico</h4>
+                <p class="text-muted" style="font-size: 0.85rem; line-height: 1.6;">
+                    <strong>Gemas Ocultas:</strong> Algoritmo de cruce Rating vs. Consumo. Detección de satisfacción por región geográfica para expansión de mercado en Latam.
+                </p>
+            </div>
+
+            <div class="card-box">
+                <h4 class="card-title" style="border-bottom-color: #6a1b9a;">4.4. Gestión Completa</h4>
+                <p class="text-muted" style="font-size: 0.85rem; line-height: 1.6;">
+                    <strong>CRUD Avanzado:</strong> Módulo maestro de usuarios con búsqueda dinámica, edición de perfiles, gestión de reseñas y sistema de notificaciones persistentes (Toasts).
+                </p>
+            </div>
+
+        </div>
+
+        <div class="file-download-box">
+            <div class="file-info">
+                <div class="file-icon-wrapper">
+                    <i class="fa-solid fa-magnifying-glass-chart"></i>
+                </div>
+                <div class="file-text">
+                    <strong class="file-name">03_advanced_analysis.sql</strong>
+                    <span class="file-desc">10 Consultas estratégicas, Procedimientos Transaccionales y Triggers de consistencia.</span>
+                </div>
+            </div>
+            <a href="sql/03_advanced_analysis.sql" download class="download-btn-pro">
+                <i class="fa-solid fa-file-export"></i>
+                <span>Descargar Script SQL</span>
+            </a>
+        </div>
+        
+    </div>
+    </section>
+
+<section id="modulo-5" class="phase-section active-module">
+    <div class="phase-header">
+        <div>
+            <h2>Módulo V: Business Intelligence</h2>
+            <p class="text-small" style="color: var(--color-teal);">Construcción de tableros estratégicos, modelado multidimensional y métricas de rendimiento</p>
+        </div>
+    </div>
+
+    <div class="content-placeholder">
+
+        <div class="grid-auto-fit" style="margin-bottom: 2.5rem;">
+            
+            <div class="card-box">
+                <h4 class="card-title">5.1. Modelado Multidimensional</h4>
+                <p class="text-muted" style="font-size: 0.85rem; line-height: 1.6;">
+                    <strong>Star Schema:</strong> Implementación de tablas de hechos (FactConsumo, FactPagos, FactReseñas) relacionadas con dimensiones optimizadas (DimUsuario, DimContenido, DimInstitución).
+                </p>
+            </div>
+
+            <div class="card-box">
+                <h4 class="card-title" style="border-bottom-color: #ef6c00;">5.2. Capa de Medidas DAX</h4>
+                <p class="text-muted" style="font-size: 0.85rem; line-height: 1.6;">
+                    <strong>Métricas de Negocio:</strong> Programación de medidas inteligentes para cálculo de <strong>ARPU</strong>, <strong>MAU</strong>, Ingresos Totales y Ratings de Calidad mediante funciones DAX.
+                </p>
+            </div>
+
+            <div class="card-box">
+                <h4 class="card-title" style="border-bottom-color: var(--color-teal);">5.3. Visualización Narrativa</h4>
+                <p class="text-muted" style="font-size: 0.85rem; line-height: 1.6;">
+                    <strong>Storytelling de Datos:</strong> Dashboard de 2 páginas con análisis de dispersión para detección y segmentación geográfica/institucional interactiva.
+                </p>
+            </div>
+
+            <div class="card-box">
+                <h4 class="card-title" style="border-bottom-color: #6a1b9a;">5.4. Seguridad de Datos</h4>
+                <p class="text-muted" style="font-size: 0.85rem; line-height: 1.6;">
+                    <strong>Anonimización:</strong> Aplicación de procesos ETL para la eliminación de datos sensibles (Emails, Passwords) cumpliendo con estándares de privacidad en el reporte final.
+                </p>
+            </div>
+
+        </div>
+
+        <div class="file-download-box">
+            <div class="file-info">
+                <div class="file-icon-wrapper" style="background: #f3e5f5; color: #7b1fa2;">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </div>
+                <div class="file-text">
+                    <strong class="file-name">Examen_ModuloV_Analitica.pbix</strong>
+                    <span class="file-desc">Reporte integral de Business Intelligence, Modelo de Datos y Visualizaciones interactivas.</span>
+                </div>
+            </div>
+            <a href="sql/Examen_ModuloV_Analitica.pbix" download class="download-btn-pro" style="background: #7b1fa2;">
+                <i class="fa-solid fa-file-arrow-down"></i>
+                <span>Descargar Reporte PBIX</span>
+            </a>
+        </div>
+        
+    </div>
+    </section>
+
+<section id="modulo-6" class="phase-section done-module">
+    <div class="phase-header">
+        <div>
+            <h2>Módulo VI: Cierre y Documentación (Informe Final)</h2>
+            <p class="text-small" style="color: var(--color-teal);">Consolidación técnica, justificación de arquitectura y manuales de operación</p>
+        </div>
+    </div>
+
+    <div class="content-placeholder">
+        <div class="grid-2-col" style="margin-bottom: 2.5rem;">
+            <div class="card-box">
+                <h4 class="card-title" style="border-bottom-color: var(--color-navy);">6.1. Justificación Técnica</h4>
+                <p class="text-muted" style="font-size: 0.85rem; line-height: 1.6; margin-bottom: 1rem;">
+                    Se ha implementado una arquitectura basada en la <strong>Tercera Forma Normal (3FN)</strong> para eliminar redundancias y asegurar la integridad referencial.
+                </p>
+                <ul class="audit-list" style="font-size: 0.8rem;">
+                    <li class="audit-item"><strong>Normalización:</strong> Desacoplamiento de archivos físicos y metadatos XR.</li>
+                    <li class="audit-item"><strong>Indexación:</strong> Uso de índices B-Tree en columnas de búsqueda frecuente (emails, títulos) para optimizar el tiempo de respuesta en un 40%.</li>
+                    <li class="audit-item"><strong>Integridad:</strong> Implementación de Triggers para el cálculo automático de reputación y Stored Procedures para transacciones financieras seguras.</li>
+                </ul>
+            </div>
+
+            <div class="card-box">
+                <h4 class="card-title" style="border-bottom-color: var(--color-orange);">6.2. Manual de Entrega</h4>
+                <p class="text-muted" style="font-size: 0.85rem; line-height: 1.6; margin-bottom: 1rem;">
+                    Pasos críticos para la correcta implementación y visualización del ecosistema StreamEduXR:
+                </p>
+                <div class="technical-text" style="background: #f4f7f6; padding: 10px; border-radius: 5px; font-size: 0.75rem;">
+                    1. Ejecutar <strong>01_ddl_streameduxr.sql</strong> para crear el esquema.<br>
+                    2. Correr <strong>02_dml_seed.sql</strong> para poblar la base de datos.<br>
+                    3. Cargar CSVs en <strong>Power BI Desktop</strong> mediante el conector de texto.<br>
+                    4. Aplicar el script <strong>03_advanced_analysis.sql</strong> para auditoría en Admin.
+                </div>
+            </div>
+        </div>
+
+        <h3 class="section-title">Paquete de Entrega Final</h3>
+        <p class="text-muted" style="margin-bottom: 1.5rem;">Descarga de todos los componentes del proyecto (Scripts SQL + Reporte PBIX):</p>
+        
+        <div class="grid-auto-fit">
+            <div class="file-download-box" style="border: 2px solid #e0e0e0;">
+                <div class="file-info">
+                    <div class="file-icon-wrapper" style="background: #e3f2fd; color: #1976d2;">
+                        <i class="fa-solid fa-file-pdf"></i>
+                    </div>
+                    <div class="file-text">
+                        <strong class="file-name">Informe_Tecnico_StreamEduXR.pdf</strong>
+                        <span class="file-desc">Documentación detallada del proyecto y glosario.</span>
+                    </div>
+                </div>
+                <a href="sql/Informe_Tecnico_StreamEduXR.pdf" download class="download-btn-pro" style="background: #1976d2;">
+                    <i class="fa-solid fa-download"></i> <span>PDF</span>
+                </a>
+            </div>
+
+            <div class="file-download-box" style="border: 2px solid var(--color-teal);">
+                <div class="file-info">
+                    <div class="file-icon-wrapper" style="background: #e0f2f1; color: var(--color-teal);">
+                        <i class="fa-solid fa-box-archive"></i>
+                    </div>
+                    <div class="file-text">
+                        <strong class="file-name">StreamEduXR_Completo.zip</strong>
+                        <span class="file-desc">Incluye Scripts SQL (01, 02, 03) y Archivo .PBIX</span>
+                    </div>
+                </div>
+                <a href="sql/StreamEduXR_Completo.zip" download class="download-btn-pro">
+                    <i class="fa-solid fa-file-zipper"></i> <span>Descargar Todo</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    </section>
+
+            <footer>
+                <p>StreamEduXR | Javier Troncoso | 2026</p>
+            </footer>
+        </main>
+    </div>
+    <div id="image-viewer" class="viewer-overlay">
+        <span class="close-viewer">&times;</span>
+        <div class="viewer-controls">
+            <button id="zoom-in"><i class="fa-solid fa-plus"></i></button>
+            <button id="zoom-out"><i class="fa-solid fa-minus"></i></button>
+            <button id="reset-zoom"><i class="fa-solid fa-rotate-left"></i></button>
+        </div>
+        <img class="viewer-content" id="full-image">
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
