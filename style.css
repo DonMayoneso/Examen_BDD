@@ -408,7 +408,7 @@ footer {
 
 .viewer-controls button:hover { transform: scale(1.1); background: #128789; }
 
-/* MEJORA DE FILE DOWNLOAD BOX */
+/* FILE DOWNLOAD BOX */
 .file-download-box {
     background: #f8fafc;
     border: 1px solid #e2e8f0;
@@ -416,7 +416,7 @@ footer {
     padding: 1.2rem 1.5rem;
     display: flex;
     align-items: center;
-    justify-content: space-between; /* Icono/texto a la izquierda, botón a la derecha */
+    justify-content: space-between;
     gap: 15px;
     transition: all 0.3s ease;
 }
@@ -485,7 +485,6 @@ footer {
     transform: scale(1.03);
 }
 
-/* Contenedor para apilamiento vertical */
 .vertical-container {
     display: flex;
     flex-direction: column;
@@ -493,7 +492,6 @@ footer {
     margin-top: 1.5rem;
 }
 
-/* Ajuste para que las card-box en vertical no se vean vacías */
 .technical-summary .card-box {
     width: 100%;
     display: block;
@@ -503,5 +501,5 @@ footer {
 }
 
 .technical-summary .card-box:hover {
-    transform: translateX(5px); /* Efecto sutil hacia la derecha */
+    transform: translateX(5px);
 }

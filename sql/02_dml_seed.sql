@@ -70,7 +70,7 @@ INSERT INTO usuario (id_institucion, id_rol, nombre_completo, email, password_ha
 (5, 3, 'Daniela Vargas', 'dvargas@esad.edu.pe', 'hash_p29'),
 (5, 3, 'Luz Cusco', 'lcusco@esad.edu.pe', 'hash_p30');
 
--- 4. CONTENIDOS (40) - Mezcla de categorías y tipos (1=Video, 2=Podcast, 3=360, 4=PDF, 5=XR)
+-- CONTENIDOS (40) - Mezcla de categorías y tipos (1=Video, 2=Podcast, 3=360, 4=PDF, 5=XR)
 INSERT INTO contenido (id_tipo_contenido, titulo, descripcion, idioma, estado) VALUES 
 
 -- Tecnología y Programación
@@ -110,13 +110,11 @@ INSERT INTO contenido (id_tipo_contenido, titulo, descripcion, idioma, estado) V
 (1, 'Estrategias de Marketing Digital', 'SEO, SEM y embudos de conversión', 'Español', 'Publicado'),
 (4, 'Plantilla de Plan de Negocios', 'Estructura base para startups tecnológicas', 'Inglés', 'Publicado'),
 (1, 'Gestión de Conflictos', 'Técnicas de negociación y mediación', 'Español', 'Publicado'),
-
--- Sección "Especiales" (Guiños)
 (2, 'Podcast: ¿Lechugo es una IA?', 'Debate conspirativo sobre la identidad de Lechugo Milaneso', 'Español', 'Publicado'),
 (1, 'Cocina Molecular con Mayoneso', 'Cómo hacer emulsiones digitales perfectas', 'Español', 'Publicado'),
 (5, 'Eustaquio Advismario: El Oráculo', 'Experiencia mística con el profesor Eustaquio', 'Español', 'Publicado'),
 
--- Varios y Miscelánea
+-- Varios
 (3, 'Auroras Boreales 360', 'Espectáculo visual capturado en Noruega', 'Multilenguaje', 'Publicado'),
 (2, 'Podcast: Astronomía para Principiantes', 'Guía para identificar constelaciones', 'Español', 'Publicado'),
 (4, 'Diccionario de Términos XR', 'Glosario completo de Realidad Extendida', 'Español', 'Publicado'),
@@ -127,9 +125,9 @@ INSERT INTO contenido (id_tipo_contenido, titulo, descripcion, idioma, estado) V
 (4, 'Código Ético de StreamEduXR', 'Normas de convivencia en la plataforma', 'Español', 'Publicado'),
 (1, 'Finanzas para Estudiantes', 'Ahorro e inversión desde la universidad', 'Español', 'Publicado');
 
--- 5. CARGA DE ARCHIVOS MULTIMEDIA (80 REGISTROS TOTALES)
+-- CARGA DE ARCHIVOS MULTIMEDIA (80 REGISTROS TOTALES)
 
--- BLOQUE 1: Recursos principales (40 registros)
+-- Recursos principales (40 registros)
 INSERT INTO archivo_multimedia (id_contenido, formato, url_ubicacion, metadatos_json)
 SELECT 
     id_contenido,
@@ -162,8 +160,8 @@ SELECT
     '{"calidad": "High-Res", "archivo": "Extra"}'
 FROM contenido;
 
--- 6. CURSOS (20) 
--- Mundo del Diseño Multimedia y Artes Digitales
+-- CURSOS (20) 
+-- Diseño Multimedia y Artes Digitales
 
 INSERT INTO curso (id_institucion, titulo, es_institucional) VALUES 
 -- Institución 1: Universidad Central de Innovación (Ecuador)
@@ -199,7 +197,7 @@ INSERT INTO curso (id_institucion, titulo, es_institucional) VALUES
 (NULL, 'Optimización de Activos para WebXR', 0);
 
 
--- 7. COMPRAS, DETALLES Y PAGOS (30 Transacciones Variadas)
+-- COMPRAS, DETALLES Y PAGOS (30 Transacciones Variadas)
 
 DELIMITER //
 CREATE PROCEDURE tmp_seed_compras()
@@ -213,30 +211,30 @@ BEGIN
     DECLARE v_id_compra INT;
 
     WHILE i <= 30 DO
-        -- 1. Seleccionar usuario y contenido aleatorio
+        -- Seleccionar usuario y contenido aleatorio
         SET v_user_id = (SELECT id_usuario FROM usuario WHERE id_rol = 3 ORDER BY RAND() LIMIT 1);
         SET v_cont_id = (SELECT id_contenido FROM contenido ORDER BY RAND() LIMIT 1);
         
-        -- 2. Generar monto aleatorio
+        -- Generar monto aleatorio
         SET v_monto = ROUND(9.99 + (RAND() * 110), 2);
         
-        -- 3. Generar fecha aleatoria entre Enero y Febrero
+        -- 3Generar fecha aleatoria entre Enero y Febrero
         SET v_fecha = DATE_ADD('2026-01-01 08:00:00', INTERVAL (RAND() * 1000) HOUR);
         
-        -- 4. Variar método de pago
+        -- Variar método de pago
         SET v_metodo = ELT(FLOOR(1 + (RAND() * 5)), 'Tarjeta de Crédito', 'PayPal', 'Stripe', 'Apple Pay', 'Transferencia');
 
-        -- 5. Insertar Cabecera de Compra
+        -- Insertar Cabecera de Compra
         INSERT INTO compra (id_usuario, monto_total, estado_pago, fecha_compra) 
         VALUES (v_user_id, v_monto, 'Completado', v_fecha);
         
         SET v_id_compra = LAST_INSERT_ID();
 
-        -- 6. Insertar Detalle (Obligatorio para integridad)
+        -- Insertar Detalle (Obligatorio para integridad)
         INSERT INTO compra_detalle (id_compra, id_contenido, precio_unitario)
         VALUES (v_id_compra, v_cont_id, v_monto);
 
-        -- 7. Insertar Pago vinculado
+        -- Insertar Pago vinculado
         INSERT INTO pago (id_compra, monto, metodo_pago, referencia_transaccion, fecha_pago)
         VALUES (v_id_compra, v_monto, v_metodo, CONCAT('STRM-', UUID_SHORT()), v_fecha);
 
@@ -248,7 +246,7 @@ DELIMITER ;
 CALL tmp_seed_compras();
 DROP PROCEDURE tmp_seed_compras;
 
--- 8. CONSUMOS (200)
+-- CONSUMOS (200)
 DELIMITER //
 
 CREATE PROCEDURE tmp_seed_consumo()
@@ -321,7 +319,7 @@ SELECT
                 'He visto el fin del renderizado y solo había un pingüino tocando el acordeón. Inaceptable.',
                 'El algoritmo de este video me habló en arameo y me pidió prestado un destornillador astral.')
         
-        -- Comentarios de usuarios "normales" pero confundidos
+        -- Comentarios de usuarios
         ELSE ELT(FLOOR(1 + (RAND() * 10)), 
             'No sé si estoy aprendiendo diseño o si mi mouse me está intentando hipnotizar.',
             'Intenté exportar este modelo 3D y mi gato empezó a hablar en binario. Ayuda.',
